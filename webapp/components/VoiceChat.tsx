@@ -61,6 +61,11 @@ export default function VoiceChat({ Idle, Speaking, Processing }: {
                 stream,
                 onSpeechStart: () => {
                     setStatus("Speaking");
+                    if (audioRef.current) {
+                        audioRef.current.pause();
+                        audioRef.current.currentTime = 0;
+                    }
+                    audioQueue.current = [];
                     startRecording();
                 },
                 onSpeechEnd: () => {
@@ -216,12 +221,12 @@ export default function VoiceChat({ Idle, Speaking, Processing }: {
     return (
         <>
             <div
-                className="flex justify-around"
+                className="flex justify-center items-end-safe` min-h-screen md:min-h-auto"
             >
                 <img
                     src={statusGifs[status]}
                     alt={status}
-                    className="justify-center absolute z-10"
+                    className="w-full max-w-xs md:max-w-md lg:max-w-lg justify-center absolute   z-10"
                 />
             </div>
             <audio ref={audioRef} className="hidden" />

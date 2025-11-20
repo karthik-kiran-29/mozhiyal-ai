@@ -50,7 +50,7 @@ export default function Home() {
       </div>
       <div className="text-center p-10 text-7xl font-bold">Make Your Website Talk!</div>
       <VoiceChat Idle="/land_page/sphere.svg" Speaking="/land_page/sphere.svg" Processing="/land_page/sphere.svg"/>
-      <img src={"/land_page/hero_background.svg"} className="mt-15 w-full absolute"></img>
+      <img src={"/land_page/hero_background.svg"} className="md:mt-25 w-full absolute"></img>
     </div>
     {/* Features Section */}
       <div className="py-20 px-4 md:px-10">

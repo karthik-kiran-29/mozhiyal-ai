@@ -5,7 +5,7 @@ export async function createWaitlist(req:any,res:any){
         const email = req.body?.email;
 
         if(!email){
-            res.status(204).json({error:"Email Not found in Request"})
+            res.status(406).json({error:"Email Not found in Request"})
         }
 
         const response = await client.waitList.create({
