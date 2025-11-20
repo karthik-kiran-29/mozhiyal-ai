@@ -4,10 +4,9 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../dist/generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -16,45 +15,50 @@ datasource db {
 }
 
 model User {
-  userId    String @id @default(uuid())
-  name      String @db.VarChar(100)
-  email     String @unique @db.VarChar(255)
-  password  String @db.VarChar(255) // Should be hashed
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  userId    String     @id @default(uuid())
+  name      String     @db.VarChar(100)
+  email     String     @unique @db.VarChar(255)
+  password  String     @db.VarChar(255) // Should be hashed
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   agentKeys AgentKey[]
 }
 
 model AgentKey {
-  keyId         String @id @default(uuid())
-  name          String @db.VarChar(100)
-  prompt        String @db.Text
-  usage         Int @default(0)
+  keyId         String         @id @default(uuid())
+  name          String         @db.VarChar(100)
+  prompt        String         @db.Text
+  usage         Int            @default(0)
   maxUsage      Int? // Optional usage limit
-  isActive      Boolean @default(true)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  isActive      Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   userId        String // Fix: should reference userId, not keyId
-  user          User @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  user          User           @relation(fields: [userId], references: [userId], onDelete: Cascade)
   conversations Conversation[]
 }
 
 model Conversation {
-  conversationId String @id @default(uuid()) // Fix typo
-  title          String? @db.VarChar(255)
+  conversationId String    @id @default(uuid()) // Fix typo
+  title          String?   @db.VarChar(255)
   apiKeyId       String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  apiKey         AgentKey @relation(fields: [apiKeyId], references: [keyId], onDelete: Cascade)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  apiKey         AgentKey  @relation(fields: [apiKeyId], references: [keyId], onDelete: Cascade)
   messages       Message[]
 }
 
 model Message {
-  messageId      String @id @default(uuid())
+  messageId      String       @id @default(uuid())
   conversationId String
-  role           String 
-  content        String @db.Text
-  createdAt      DateTime @default(now())
+  role           String
+  content        String       @db.Text
+  createdAt      DateTime     @default(now())
   conversation   Conversation @relation(fields: [conversationId], references: [conversationId], onDelete: Cascade)
 }
 
+model WaitList {
+  waitlistId String   @id @default(uuid())
+  email      String
+  createdAt  DateTime @default(now())
+}

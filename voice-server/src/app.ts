@@ -1,6 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
-import userRoutes from './routes/UserRoute';
+import waitlistRoutes from './routes/WaitListRoute';
 
 export function createApp() {
   const app = express();
@@ -9,7 +9,7 @@ export function createApp() {
   app.use(express.json());
   
   // Routes
-  app.use("/user", userRoutes);
+  app.use("/waitlist", waitlistRoutes);
   
   return app;
 }
