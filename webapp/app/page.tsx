@@ -2,7 +2,10 @@
 
 import VoiceChat from "@/components/VoiceChat";
 import Image from "next/image";
+import { env } from "process";
 import { useState } from "react";
+import axios from "axios";
+
 
 
 
@@ -12,6 +15,7 @@ export default function Home() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e:any) => {
+    addEmail(email);
     e.preventDefault;
     if (email) {
       setIsSubmitted(true);
@@ -19,6 +23,15 @@ export default function Home() {
       setTimeout(() => setIsSubmitted(false), 3000);
     }
   };
+
+  async function addEmail(email:String) {
+    const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/waitlist`;
+    const data = {email};
+
+    console.log(process.env.SERVER_URL)
+
+    const response = await axios.post(url,data);
+  }
 
   const features = [
     {
