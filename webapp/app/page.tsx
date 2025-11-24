@@ -14,56 +14,67 @@ export default function Home() {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e:any) => {
-    addEmail(email);
+  const handleSubmit = async(e:any) => {
+    const isSuccess = await addEmail(email);
     e.preventDefault;
-    if (email) {
+    if (isSuccess) {
       setIsSubmitted(true);
       setEmail('');
       setTimeout(() => setIsSubmitted(false), 3000);
     }
   };
 
-  async function addEmail(email:String) {
+  async function addEmail(email:String):Promise<Boolean> {
+    try{
     const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/waitlist`;
     const data = {email};
 
-    console.log(process.env.SERVER_URL)
-
     const response = await axios.post(url,data);
+
+    if(!response.data){
+      return false;
+    }
+
+    return true;
+    }catch(error){
+      console.log("error:addEmail func -",error);
+      return false;
+    }
   }
 
   const features = [
     {
       title: "Customize Your Model",
       description: "Tailor your AI voice model to match your brand's personality. Choose from various voice tones, speaking styles, and response patterns. Configure the model's behavior to align perfectly with your website's purpose and audience expectations.",
-      image: "/api/placeholder/500/400"
+      image: "land_page/customise_your_model.png"
     },
     {
       title: "Test The Voice Model",
       description: "Before going live, thoroughly test your voice model in our sandbox environment. Try different scenarios, adjust parameters in real-time, and ensure the AI responds exactly how you want. Perfect your conversational flow before deployment.",
-      image: "/api/placeholder/500/400"
+      image: "land_page/test_the_model.png"
     },
     {
       title: "Copy & Paste on your Page",
       description: "Integration couldn't be simpler. Just copy our lightweight code snippet and paste it into your website. No complex setup, no backend configuration needed. Your website will be talking to visitors in minutes, not hours.",
-      image: "/api/placeholder/500/400"
+      image: "land_page/copy_and_paste.png"
     }
   ];
   return (
     <>
     <div className="h-screen">
-      <div className="flex justify-between h-5 p-10 font-bold text-3xl mx-10">
+      <div className="flex justify-between h-5 p-10 font-bold text-3xl md:mx-10">
         <h1>MOLIYAL AI</h1>
         <h1>BETA</h1>
       </div>
-      <div className="flex text-center w-full justify-around mt-30">
+      <div className="flex text-center w-full justify-around md:mt-30 mt-15">
         <div className="py-2 px-5 mt-1 text-3xl rounded-xl z-10 absolute bg-black">In Just Few Clicks</div>
         <div className="py-3 px-6 text-3xl rounded-xl bg-gradient-to-r from-red-500 via-orange-500 via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-violet-500">In Just Few Clicks</div>
       </div>
       <div className="text-center p-10 text-7xl font-bold">Make Your Website Talk!</div>
-      <VoiceChat Idle="/land_page/sphere.svg" Speaking="/land_page/sphere.svg" Processing="/land_page/sphere.svg"/>
-      <img src={"/land_page/hero_background.svg"} className="md:mt-25 w-full absolute"></img>
+      <div className="flex flex-col justify-between">
+        <VoiceChat Idle="/land_page/sphere.svg" Speaking="/land_page/sphere.svg" Processing="/land_page/sphere.svg"/>
+        <img src={"/land_page/hero_background.svg"} className="w-full absolute md:pt-25 pt-55"></img>
+      </div>
     </div>
     {/* Features Section */}
       <div className="py-20 px-4 md:px-10">

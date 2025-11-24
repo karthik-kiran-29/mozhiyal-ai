@@ -6,7 +6,11 @@ import cors from 'cors'
 export function createApp() {
   const app = express();
 
-  app.use(cors());
+  const corsOptions = {
+  origin: process.env.FRONTEND_URL,
+};
+
+  app.use(cors(corsOptions));
   
   app.use(morgan('dev'));
   app.use(express.json());
