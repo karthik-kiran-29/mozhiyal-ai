@@ -9,12 +9,6 @@ declare global {
     }
 }
 
-interface VoiceChatProps {
-    Idle: string;
-    Speaking: string;
-    Processing: string;
-}
-
 export default function VoiceChat({ Idle, Speaking, Processing }: {
     Idle: string;
     Speaking: string;

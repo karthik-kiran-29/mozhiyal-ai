@@ -1,8 +1,6 @@
 "use client"
 
 import VoiceChat from "@/components/VoiceChat";
-import Image from "next/image";
-import { env } from "process";
 import { useState } from "react";
 import axios from "axios";
 
@@ -24,7 +22,7 @@ export default function Home() {
     }
   };
 
-  async function addEmail(email:String):Promise<Boolean> {
+  async function addEmail(email:string):Promise<boolean> {
     try{
     const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/waitlist`;
     const data = {email};
@@ -135,7 +133,7 @@ export default function Home() {
 
           {isSubmitted && (
             <div className="mt-6 p-4 bg-green-900/20 border border-green-500/20 rounded-xl">
-              <p className="text-green-400">Thanks for joining! We'll be in touch soon.</p>
+              <p className="text-green-400">Thanks for joining! We&apos;ll be in touch soon.</p>
             </div>
           )}
         </div>
