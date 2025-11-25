@@ -1,6 +1,7 @@
 import { SarvamAIClient } from "sarvamai";
 import fs from "fs";
 import { SarvamAIConfig } from "../../config/SarvamAIConfig";
+import { File } from 'node:buffer'
  
 
 export async function TranscriberSarvam(File_path: string): Promise<string> {
