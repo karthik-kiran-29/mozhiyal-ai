@@ -39,7 +39,7 @@ export default function VoiceChat({ Idle, Speaking, Processing }: {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             mediaStreamRef.current = stream;
 
-            ws.current = new WebSocket("ws://localhost:8080");
+            ws.current = new WebSocket(`${process.env.NEXT_PUBLIC_WS_SERVER}`);
             ws.current.onopen = () => console.log("Connected to WebSocket");
             ws.current.onmessage = (message) => {
                 const parsed = JSON.parse(message.data);
