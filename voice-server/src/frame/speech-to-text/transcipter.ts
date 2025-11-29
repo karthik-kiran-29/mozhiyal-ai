@@ -11,8 +11,7 @@ export async function TranscriberSarvam(File_path: string): Promise<string> {
     const file = new File([buffer], File_path.split("/").pop() || "audio", { type: "audio/wav" });
 
     const response = await client.speechToText.transcribe(file, {
-        model: "saarika:v2",
-      language_code: "ta-IN",
+        model: "saarika:v2"
     });
 
     return response.transcript;

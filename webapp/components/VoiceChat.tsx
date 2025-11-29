@@ -20,6 +20,7 @@ export default function VoiceChat({ Idle, Speaking, Processing }: {
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const audioQueue = useRef<string[]>([]);
     const mediaStreamRef = useRef<MediaStream | null>(null);
+    const [isAgentOn,setIsAgentOn] = useState<boolean>(false);
 
     // GIFs for each status
     const statusGifs: Record<typeof status, string> = {
@@ -60,14 +61,16 @@ export default function VoiceChat({ Idle, Speaking, Processing }: {
                         audioRef.current.currentTime = 0;
                     }
                     audioQueue.current = [];
-                    startRecording();
+                    if(isAgentOn){
+                        startRecording();
+                    }
                 },
                 onSpeechEnd: () => {
                     setStatus("Processing");
                     stopRecording();
                 },
             });
-
+        
             myvad.start();
         };
 
@@ -78,7 +81,7 @@ export default function VoiceChat({ Idle, Speaking, Processing }: {
             mediaStreamRef.current?.getTracks().forEach((track) => track.stop());
         };
         // eslint-disable-next-line
-    }, []);
+    }, [isAgentOn]);
 
     const loadScript = (src: string): Promise<void> => {
         return new Promise((resolve, reject) => {
@@ -212,18 +215,25 @@ export default function VoiceChat({ Idle, Speaking, Processing }: {
         return new Blob([byteArray], { type });
     };
 
+    function handleClick(){
+        setIsAgentOn(!isAgentOn);
+    }
+
     return (
         <>
+        <button onClick={handleClick}>
             <div
                 className="flex justify-center items-end-safe` min-h-screen md:min-h-auto"
             >
                 <img
                     src={statusGifs[status]}
                     alt={status}
-                    className="w-full max-w-xs md:max-w-md lg:max-w-lg justify-center absolute   z-10"
+                    className="w-full max-w-xs md:max-w-md lg:max-w-lg justify-center absolute  animate-pulse z-10"
                 />
+                {!isAgentOn?<div className=" z-10 md:py-56 py-36 text-2xl font-bold text-blue-200">Tap Here to Speak !!</div>:<div className=" z-10 md:py-56 py-36 text-2xl font-bold text-blue-200">Tap Here to Stop</div>}
             </div>
-            <audio ref={audioRef} className="hidden" />
+        </button>
+        <audio ref={audioRef} className="hidden" />
         </>
     );
 }

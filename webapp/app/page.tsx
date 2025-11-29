@@ -125,7 +125,7 @@ export default function Home() {
             
             <button
               onClick={handleSubmit}
-              className="w-full md:w-auto px-8 py-4 text-lg font-semibold bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl hover:from-blue-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="w-full md:w-auto px-8 py-4 text-lg font-semibold bg-blue-500 rounded-xl transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               Join Waitlist
             </button>
